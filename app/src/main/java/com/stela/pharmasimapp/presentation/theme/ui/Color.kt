@@ -1,4 +1,4 @@
-package com.stela.pharmasimapp.ui.theme
+package com.stela.pharmasimapp.presentation.theme.ui
 
 import androidx.compose.ui.graphics.Color
 
