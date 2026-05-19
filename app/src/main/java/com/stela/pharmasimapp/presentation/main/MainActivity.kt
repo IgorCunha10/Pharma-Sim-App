@@ -69,19 +69,21 @@ class MainActivity : ComponentActivity() {
             containerColor = MaterialTheme.colorScheme.surfaceVariant
         ),
             modifier = Modifier.size(width = 280.dp,
-                height = 100.dp))
+                height = 120.dp))
         {
 
             Column (modifier = Modifier.padding(20.dp),
             ) {
                 Text(
-                    text = "Última leitura: ",
+                    text = "Última leitura: Nenhuma Leitura",
                     fontFamily = FontFamily.SansSerif,
                     fontWeight = FontWeight.Normal
                 )
 
+                Spacer(modifier = Modifier.padding(2.dp))
+
                 Text(
-                    text = "Status: ",
+                    text = "Status: Aguardando Leitura",
                     fontFamily = FontFamily.SansSerif,
                     fontWeight = FontWeight.Normal
                 )
