@@ -47,14 +47,12 @@ class MainActivity : ComponentActivity() {
                         verticalArrangement = Arrangement.Center
                     )
                     {
-                        Text(text = "Select an option to scan")
-                        Spacer(modifier = Modifier.padding(bottom = 16.dp))
 
-//                      scanButtons(modifier = Modifier.padding(20.dp))
+                        Text(text = "SELECT AN OPTION TO SCAN")
+                        Spacer(modifier = Modifier.padding(bottom = 16.dp))
                         ButtonsCard(modifier = Modifier.padding(10.dp))
                         Spacer(modifier = Modifier.padding(bottom = 16.dp))
                         ScanStatusCard()
-//                        scanStatus()
 
                     }
 
@@ -67,15 +65,14 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun ScanStatusCard() {
 
-
         Card(colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
         ),
-            modifier = Modifier.size(width = 200.dp, height = 80.dp)) {
+            modifier = Modifier.size(width = 280.dp,
+                height = 100.dp))
+        {
 
-            Column (
-                horizontalAlignment = Alignment.Start,
-                verticalArrangement = Arrangement.Center
+            Column (modifier = Modifier.padding(20.dp),
             ) {
                 Text(
                     text = "Última leitura: ",
