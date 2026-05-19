@@ -184,7 +184,9 @@ class MainActivity : ComponentActivity() {
                 btnOptions.forEach { option ->
 
                     Row(modifier = Modifier.fillMaxWidth()
-                            .clickable{selectedOption = option}
+                            .clickable{
+                                selectedOption = option
+                            }
                         .padding(8.dp),
                         verticalAlignment = Alignment.CenterVertically)
                     {
