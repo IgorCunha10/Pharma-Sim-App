@@ -1,5 +1,6 @@
 package com.stela.pharmasimapp.presentation.main
 
+import android.R.attr.onClick
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -53,6 +55,8 @@ class MainActivity : ComponentActivity() {
                         ButtonsCard(modifier = Modifier.padding(10.dp))
                         Spacer(modifier = Modifier.padding(bottom = 16.dp))
                         ScanStatusCard()
+                        Spacer(modifier = Modifier.padding(10.dp))
+                        ScanButton {  }
 
                     }
 
@@ -135,6 +139,15 @@ class MainActivity : ComponentActivity() {
 
         }
 
+    }
+
+    @Composable
+    fun ScanButton(onClick: () -> Unit) {
+        Button(
+            onClick = {onClick()}
+        ) {
+            Text(text = "Start Scan")
+        }
     }
 }
 
