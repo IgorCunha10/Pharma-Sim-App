@@ -1,6 +1,5 @@
 package com.stela.pharmasimapp.presentation.main
 
-import android.R.attr.onClick
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,6 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,10 +17,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -57,6 +60,8 @@ class MainActivity : ComponentActivity() {
                         ScanStatusCard()
                         Spacer(modifier = Modifier.padding(10.dp))
                         ScanButton {  }
+                        Spacer(modifier = Modifier.padding(bottom = 10.dp))
+                        PartialBottomSheet()
 
                     }
 
@@ -79,7 +84,7 @@ class MainActivity : ComponentActivity() {
             Column (modifier = Modifier.padding(20.dp),
             ) {
                 Text(
-                    text = "Última leitura: Nenhuma Leitura",
+                    text = "Last Read: Nenhuma leitura",
                     fontFamily = FontFamily.SansSerif,
                     fontWeight = FontWeight.Normal
                 )
@@ -131,7 +136,6 @@ class MainActivity : ComponentActivity() {
 
                         Text(text = option,
                             modifier = Modifier.padding(8.dp))
-
                     }
                 }
 
@@ -151,6 +155,36 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun PartialBottomSheet() {
+
+    var showBottomSheet by remember { mutableStateOf(false) }
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = false,
+    )
+
+    Column(modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally) {
+
+        Button(onClick = { showBottomSheet = true }) {
+            Text(text = "Scan functionality")
+        }
+
+        if (showBottomSheet) {
+            ModalBottomSheet(
+                modifier = Modifier.fillMaxHeight(),
+                sheetState = sheetState,
+                onDismissRequest = {showBottomSheet = false}
+            ) {
+                Text(text = "A função de scan é utilizada na leitura de Tags RFID. Esta " +
+                        "função exige a utilização de uma leitora física apropriada.")
+            }
+        }
+    }
+
+
+}
 
 
 
