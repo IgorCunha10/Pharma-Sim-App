@@ -1,4 +1,4 @@
-package com.stela.pharmasimapp.domain;
+package com.stela.pharmasimapp.domain.model;
 
 public enum ReaderStatus {
 
