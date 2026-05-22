@@ -1,4 +1,4 @@
-package com.stela.pharmasimapp.presentation.main
+package com.stela.pharmasimapp.presentation.screen
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -64,9 +64,7 @@ class MainActivity : ComponentActivity() {
                         PartialBottomSheet()
 
                     }
-
                 }
-
             }
         }
     }
@@ -138,7 +136,6 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.padding(8.dp))
                     }
                 }
-
             }
         }
 
