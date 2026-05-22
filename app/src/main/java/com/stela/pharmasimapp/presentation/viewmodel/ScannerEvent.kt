@@ -9,5 +9,5 @@ sealed class ScannerEvent {
 
     data object onShowBottomSheet : ScannerEvent()
     data object onHideBottomSheet : ScannerEvent()
-    
+
 }
