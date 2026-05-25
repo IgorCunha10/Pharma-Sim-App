@@ -10,8 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class MainViewModel (private val startScanUseCase : StartScanUseCase,
-                     private val stopScanUseCase: StopScanUseCase) : ViewModel() {
+class MainViewModel : ViewModel() {
 
     private val _uiState = MutableStateFlow(
         ScannerState()
@@ -37,7 +36,7 @@ class MainViewModel (private val startScanUseCase : StartScanUseCase,
                         status = "Scanning"
                     )
                 }
-                startScan()
+//                startScan()
             }
 
             ScannerEvent.onStopScan -> {
@@ -47,7 +46,7 @@ class MainViewModel (private val startScanUseCase : StartScanUseCase,
                         status = "Stopping read"
                     )
                 }
-                stopScan()
+//                stopScan()
             }
 
             ScannerEvent.onShowBottomSheet -> {
@@ -71,21 +70,21 @@ class MainViewModel (private val startScanUseCase : StartScanUseCase,
         }
     }
 
-    private fun startScan() {
-
-        viewModelScope.launch(Dispatchers.IO) {
-
-            startScanUseCase.execute()
-        }
-    }
-
-    private fun stopScan() {
-
-        viewModelScope.launch(Dispatchers.IO) {
-
-            stopScanUseCase.execute()
-        }
-    }
+//    private fun startScan() {
+//
+//        viewModelScope.launch(Dispatchers.IO) {
+//
+//            startScanUseCase.execute()
+//        }
+//    }
+//
+//    private fun stopScan() {
+//
+//        viewModelScope.launch(Dispatchers.IO) {
+//
+//            stopScanUseCase.execute()
+//        }
+//    }
 
 
 }
