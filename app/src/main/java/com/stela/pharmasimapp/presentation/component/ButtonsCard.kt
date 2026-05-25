@@ -39,8 +39,9 @@ fun ButtonsCard(selectedOption : String,
         Column(modifier = Modifier.padding(16.dp)) {
 
             btnOptions.forEach { option ->
-                Row(modifier = Modifier.fillMaxWidth()
-                    .clickable{
+                Row(modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
                         onOptionSelected(option)
                     }
                     .padding(8.dp),

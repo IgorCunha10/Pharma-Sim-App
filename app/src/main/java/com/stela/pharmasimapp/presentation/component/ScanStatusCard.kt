@@ -15,12 +15,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ScanStatusCard(lastRead : String,
-                   status: String) {
+fun ScanStatusCard(
+    lastRead: String,
+    status: String
+) {
 
     Card(
         colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
         ),
         modifier = Modifier.size(
             width = 280.dp,
