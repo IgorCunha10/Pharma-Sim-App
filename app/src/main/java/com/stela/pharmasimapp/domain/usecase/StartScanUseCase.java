@@ -7,7 +7,6 @@ public class StartScanUseCase {
     public StartScanUseCase(ReaderRepository repository) {
         this.repository = repository;
     }
-
     public void execute() {
         repository.startScan();
     }
