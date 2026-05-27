@@ -38,7 +38,7 @@ fun ScannerScreen(viewModel: MainViewModel = viewModel() ) {
             selectedOption = state.selectedOption,
             onOptionSelected = {
                 viewModel.onEvent(
-                    ScannerEvent.onOptionSelected(it)
+                    ScannerEvent.OptionSelected(it)
                 )
             }
         )
@@ -57,7 +57,7 @@ fun ScannerScreen(viewModel: MainViewModel = viewModel() ) {
 
             onClick = {
                 viewModel.onEvent(
-                    ScannerEvent.onStartScan
+                    ScannerEvent.StartScan
                 )
             }
         )

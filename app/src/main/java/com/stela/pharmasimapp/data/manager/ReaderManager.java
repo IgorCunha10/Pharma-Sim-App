@@ -1,4 +1,4 @@
-package com.stela.pharmasimapp.domain.readermanager;
+package com.stela.pharmasimapp.data.manager;
 
 import android.app.Activity;
 
