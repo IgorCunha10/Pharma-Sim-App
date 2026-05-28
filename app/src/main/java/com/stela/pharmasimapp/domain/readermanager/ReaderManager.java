@@ -8,6 +8,7 @@ import com.grotg.hpp.otglibrary.param.EpcBean;
 
 public class ReaderManager {
     private final OtgReader otgReader;
+    private TagCallback tagCallback;
 
     public interface TagCallback {
         void onTagRead(EpcBean epcBean);
@@ -23,7 +24,14 @@ public class ReaderManager {
 
     public void startScan() {
         try {
+            otgReader.setreadTagDataCallback(epcBean -> {
+                if (tagCallback != null) {
+                    tagCallback.onTagRead(epcBean);
+                }
+            });
+
             otgReader.ScanTags();
+
         } catch (ReaderException e) {
             throw new RuntimeException(e);
         }
