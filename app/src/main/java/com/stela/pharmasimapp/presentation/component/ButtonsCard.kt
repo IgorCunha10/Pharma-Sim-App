@@ -16,15 +16,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.stela.pharmasimapp.domain.model.ScanType
 
 @Composable
-fun ButtonsCard(selectedOption : String,
-                onOptionSelected: (String) -> Unit) {
+fun ButtonsCard(selectedOption : ScanType?,
+                onOptionSelected: (ScanType) -> Unit) {
 
     val btnOptions = listOf(
-        "UNIT_ASSOCIATION",
-        "BOX_ASSOCIATION",
-        "BOX_CLOSURE"
+        ScanType.UNIT_ASSOCIATION,
+        ScanType.BOX_ASSOCIATION,
+        ScanType.BOX_CLOSURE
     )
 
     Card(
@@ -56,7 +57,7 @@ fun ButtonsCard(selectedOption : String,
                         }
                     )
 
-                    Text(text = option,
+                    Text(text = option.name,
                         modifier = Modifier.padding(8.dp))
                 }
             }

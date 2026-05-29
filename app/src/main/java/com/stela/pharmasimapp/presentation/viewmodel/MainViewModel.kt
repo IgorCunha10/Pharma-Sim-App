@@ -4,12 +4,25 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.stela.pharmasimapp.data.manager.ReaderManager
+import com.stela.pharmasimapp.domain.model.Metadata
+import com.stela.pharmasimapp.domain.model.ProcessingStatus
+import com.stela.pharmasimapp.domain.model.RfidReadEvent
 import com.stela.pharmasimapp.domain.model.Tag
+import com.stela.pharmasimapp.domain.repository.ScannerRepository
+import com.stela.pharmasimapp.domain.usecase.SendTagUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import java.text.SimpleDateFormat
+import java.time.Instant
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
+import java.util.UUID
 
-class MainViewModel(private val readerManager: ReaderManager) : ViewModel() {
+
+class MainViewModel(private val readerManager: ReaderManager,
+        private val sendTagUseCase: SendTagUseCase) : ViewModel() {
 
     private val connectedLiveData = MutableLiveData<Boolean?>(false)
     private val errorLiveData = MutableLiveData<String?>()
@@ -27,8 +40,9 @@ class MainViewModel(private val readerManager: ReaderManager) : ViewModel() {
             Log.d("RFID", "TAG DETECTADA")
 
             val tag = Tag(epcBean)
-
             logTag(tag)
+
+            sendTagToApi(tag)
         })
 
     }
@@ -64,18 +78,36 @@ class MainViewModel(private val readerManager: ReaderManager) : ViewModel() {
 
             ScannerEvent.onStartScan -> {
 
-                if (_uiState.value.isConnected){
+                if (!_uiState.value.isConnected) {
 
-                    startScan()
-                    _uiState.update {
-                        it.copy(isScanning = true,
-                                status = "Lendo Tags")
-
-                    }
-                } else {
                     _uiState.update {
                         it.copy(
                             message = "Conecte a leitora antes de iniciar o scan"
+                        )
+                    }
+
+                    return
+                }
+
+                if (_uiState.value.isScanning) {
+
+                    stopScan()
+
+                    _uiState.update {
+                        it.copy(
+                            isScanning = false,
+                            status = "Leitura parada"
+                        )
+                    }
+
+                } else {
+
+                    startScan()
+
+                    _uiState.update {
+                        it.copy(
+                            isScanning = true,
+                            status = "Lendo Tags"
                         )
                     }
                 }
@@ -151,6 +183,84 @@ class MainViewModel(private val readerManager: ReaderManager) : ViewModel() {
         } catch (e: Exception) {
             errorLiveData.postValue("Erro ao parar scan")
         }
+    }
+
+    private fun sendTagToApi(tag: Tag) {
+
+        val selectedType = _uiState.value.selectedOption
+
+        if (selectedType == null) {
+
+            _uiState.update {
+                it.copy(
+                    message = "Selecione uma operação"
+                )
+            }
+
+            return
+        }
+
+        val event = RfidReadEvent(
+
+            "A-01",
+
+            tag.strepc,
+
+            null,
+
+            UUID.randomUUID().toString(),
+
+            Metadata("android-app"),
+
+            selectedType,
+
+            ProcessingStatus.READY,
+
+            getCurrentTimestamp(),
+
+            "R-01",
+
+            getCurrentTimestamp(),
+
+            tag.intRssi
+        )
+
+        sendTagUseCase.execute(
+            event,
+
+            object : ScannerRepository.RepositoryCallback {
+
+                override fun onSuccess() {
+
+                    _uiState.update {
+                        it.copy(
+                            message = "Tag enviada com sucesso"
+                        )
+                    }
+                }
+
+                override fun onError(error: String) {
+
+                    _uiState.update {
+                        it.copy(
+                            message = error
+                        )
+                    }
+                }
+            }
+        )
+    }
+
+    private fun getCurrentTimestamp(): String {
+
+        val sdf = SimpleDateFormat(
+            "yyyy-MM-dd'T'HH:mm:ss'Z'",
+            Locale.getDefault()
+        )
+
+        sdf.timeZone = TimeZone.getTimeZone("UTC")
+
+        return sdf.format(Date())
     }
 
 

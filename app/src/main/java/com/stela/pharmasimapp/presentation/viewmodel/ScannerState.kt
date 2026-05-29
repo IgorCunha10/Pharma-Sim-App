@@ -1,9 +1,10 @@
 package com.stela.pharmasimapp.presentation.viewmodel
 
+import com.stela.pharmasimapp.domain.model.ScanType
 import com.stela.pharmasimapp.domain.model.Tag
 
 data class ScannerState(
-    val selectedOption : String = "",
+    val selectedOption : ScanType? = null,
     val lastRead : String = "",
     val status: String = "",
     val isScanning: Boolean = false,
