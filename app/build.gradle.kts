@@ -14,7 +14,8 @@ android {
     defaultConfig {
         applicationId = "com.stela.pharmasimapp"
         minSdk = 24
-        targetSdk = 36
+        //noinspection ExpiredTargetSdkVersion
+        targetSdk = 30
         versionCode = 1
         versionName = "1.0"
 
@@ -43,7 +44,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha05")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0")
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
@@ -51,6 +52,7 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation("com.squareup.retrofit2:retrofit:3.0.0")
     implementation(files("libs/grmt288-1.0.0.7.aar"))
+    implementation("org.greenrobot:eventbus:3.3.1")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
