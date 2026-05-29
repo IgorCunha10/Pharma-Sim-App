@@ -28,7 +28,6 @@ class MainViewModel(private val readerManager: ReaderManager) : ViewModel() {
 
             val tag = Tag(epcBean)
 
-            Log.d("RFID", tag.strepc)
             logTag(tag)
         })
 
@@ -53,10 +52,14 @@ class MainViewModel(private val readerManager: ReaderManager) : ViewModel() {
         when (event) {
             is ScannerEvent.onOptionSelected -> {
                 _uiState.update {
-                    it.copy(
+                        it.copy(
                         selectedOption = event.option
                     )
                 }
+            }
+
+            ScannerEvent.onConnectReader -> {
+                connect()
             }
 
             ScannerEvent.onStartScan -> {
@@ -112,12 +115,22 @@ class MainViewModel(private val readerManager: ReaderManager) : ViewModel() {
 
     fun connect() {
         readerManager.connect{ success, message ->
-           _uiState.update {
-               it.copy(
-                   isConnected = success,
-                   message = message
-               )
-           }
+
+            if (success) {
+
+                _uiState.update {
+                    it.copy(isConnected = true,
+                        status = "Connected",
+                        message = "Leitora Conectada")
+                }
+           } else {
+
+               _uiState.update {
+                   it.copy(isConnected = false,
+                       status = "Disconnected",
+                       message = "Conecte a leitora")
+               }
+            }
         }
     }
 

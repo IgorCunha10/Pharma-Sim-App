@@ -4,6 +4,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
@@ -18,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.stela.pharmasimapp.presentation.viewmodel.MainViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.stela.pharmasimapp.presentation.component.ButtonsCard
+import com.stela.pharmasimapp.presentation.component.ConnectButton
 import com.stela.pharmasimapp.presentation.component.PartialBottomSheet
 import com.stela.pharmasimapp.presentation.component.ScanButton
 import com.stela.pharmasimapp.presentation.component.ScanStatusCard
@@ -63,25 +65,42 @@ fun ScannerScreen(viewModel: MainViewModel) {
 
         Spacer(modifier = Modifier.padding(bottom = 16.dp))
 
-        ScanButton(
-            isScanning = state.isScanning,
+        Row (
+            horizontalArrangement = Arrangement.Center) {
 
-            onClick = {
 
-                Log.d("RFID", "CLICK BOTAO")
-
-                // se conectado na leitor
-                    // eu já estou lendo
-                        //se sim - tem que para de ler
-                // se eu não estou lendo
-                // se não tentar conecta na leitora
-
+            ConnectButton {
                 viewModel.onEvent(
-                    ScannerEvent.onStartScan
+                    ScannerEvent.onConnectReader
                 )
-
             }
-        )
+
+            Spacer(modifier = Modifier.padding(4.dp))
+
+            ScanButton(
+                isScanning = state.isScanning,
+
+                onClick = {
+
+                    Log.d("RFID", "CLICK BOTAO")
+                    
+                    if(state.isScanning) {
+                        viewModel.onEvent(
+                            ScannerEvent.onStopScan
+                        )
+                    } else {
+                        viewModel.onEvent(
+                            ScannerEvent.onStartScan
+                        )
+                    }
+
+                }
+            )
+
+
+        }
+
+
 
         Spacer(modifier = Modifier.padding(bottom = 16.dp))
 
