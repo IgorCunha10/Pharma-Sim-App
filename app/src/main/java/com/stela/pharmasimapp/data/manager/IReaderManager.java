@@ -1,7 +1,6 @@
-package com.stela.pharmasimapp.data.repository;
+package com.stela.pharmasimapp.data.manager;
 
 import com.grotg.hpp.otglibrary.otgreader.OtgReader;
-import com.stela.pharmasimapp.data.manager.ReaderManager;
 
 public interface IReaderManager {
 
